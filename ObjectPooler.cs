@@ -56,6 +56,7 @@ public class ObjectPooler : MonoBehaviour
 
         GameObject objectToSpawn = poolDictionary[tag].Dequeue();
 
+        objectToSpawn.SetActive(false);
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
@@ -63,6 +64,17 @@ public class ObjectPooler : MonoBehaviour
         poolDictionary[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
+    }
+
+    public void ResetPool()
+    {
+        foreach (Pool pool in pools)
+        {
+            foreach (GameObject go in ObjectPooler.Instance.poolDictionary[pool.tag])
+            {
+                go.SetActive(false);
+            }
+        }
     }
 
 }
